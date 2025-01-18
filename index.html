@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ocean Waves Flashcards</title>
+    <title>✨ Flashcard Study App</title>
     <style>
-        /* Base styles */
+        /* Enhanced Base styles */
         * {
             margin: 0;
             padding: 0;
@@ -15,107 +14,119 @@
         }
 
         body {
-            background: linear-gradient(135deg, #e0f7fa, #80deea, #4dd0e1);
+            background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
             min-height: 100vh;
-            color: #006064;
+            color: #e0f7fa;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Ripple effect background */
-        .ripple-background {
+        /* Animated background */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(41, 196, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 41, 230, 0.2) 0%, transparent 50%);
+            animation: gradientMove 15s ease infinite;
             z-index: -1;
         }
 
-        /* Main container */
+        @keyframes gradientMove {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-10px, 10px); }
+            50% { transform: translate(10px, -10px); }
+            75% { transform: translate(-10px, -10px); }
+        }
+
+        /* Glassy container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            position: relative;
         }
 
-        /* Header styles */
+        /* Enhanced header styles */
         .header {
             text-align: center;
             margin-bottom: 2rem;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 96, 100, 0.2);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .header:hover {
+            transform: translateY(-5px) rotateX(5deg);
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            color: #006064;
+            font-size: 2.8rem;
+            color: #fff;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
         }
 
-        .header p {
-            color: #00838f;
-            font-size: 1.1rem;
-        }
-
-        /* Control buttons */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
+        /* Enhanced button styles */
         .btn {
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 25px;
-            background: #00acc1;
-            color: white;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            min-width: 150px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 2px;
+            min-width: 180px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
         }
 
-        .btn:hover {
-            background: #00838f;
-            transform: translateY(-2px);
-        }
-
-        .btn::after {
+        .btn::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
         }
 
-        .btn:active::after {
-            width: 200px;
-            height: 200px;
+        .btn:hover::before {
+            left: 100%;
         }
 
-        /* Flashcard styles */
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Enhanced flashcard styles */
         .flashcard-container {
-            perspective: 1000px;
-            margin: 2rem auto;
+            perspective: 2000px;
+            margin: 3rem auto;
             width: 600px;
             height: 400px;
         }
@@ -139,59 +150,103 @@
             height: 100%;
             padding: 2rem;
             backface-visibility: hidden;
-            border-radius: 15px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
             text-align: center;
-            background: rgba(255,255,255,0.9);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 2px solid #80deea;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            color: #fff;
+        }
+
+        .card-face::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00fff2, #0099ff, #ff00f7);
+            z-index: -1;
+            border-radius: 22px;
+            opacity: 0.3;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         .back {
-            background: #b2ebf2;
             transform: rotateY(180deg);
+            background: rgba(255, 255, 255, 0.15);
         }
 
-        /* Deck list styles */
+        /* Enhanced deck list styles */
         .deck-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            padding: 1rem;
         }
 
         .deck-card {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
             transition: all 0.3s ease;
-            border: 2px solid #80deea;
-            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deck-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .deck-card:hover::before {
+            left: 100%;
         }
 
         .deck-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(31, 38, 135, 0.45);
         }
 
-        /* Progress bar with wave effect */
+        /* Enhanced progress bar */
         .progress-bar {
             width: 100%;
             height: 12px;
-            background: #e0f7fa;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 6px;
             margin: 1.5rem 0;
             overflow: hidden;
             position: relative;
+            backdrop-filter: blur(4px);
         }
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, #4dd0e1, #00acc1);
+            background: linear-gradient(90deg, #00fff2, #0099ff);
             position: relative;
             transition: width 0.5s ease;
         }
@@ -214,38 +269,150 @@
                 transparent
             );
             background-size: 20px 20px;
-            animation: wave 1s linear infinite;
+            animation: progressWave 1s linear infinite;
         }
 
-        @keyframes wave {
+        @keyframes progressWave {
             0% { background-position: 0 0; }
             100% { background-position: 20px 0; }
         }
 
-        /* Modal styles */
+        /* Enhanced modal styles */
         .modal {
-            display: none;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            color: #fff;
+        }
+
+        /* Enhanced form styles */
+        .form-group input,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            backdrop-filter: blur(4px);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #00fff2;
+            box-shadow: 0 0 15px rgba(0, 255, 242, 0.3);
+        }
+
+        /* Enhanced toast notification */
+        .toast {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            color: #fff;
+            border-radius: 30px;
+            animation: toastSlideIn 0.3s ease;
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                transform: translateX(100%) translateY(-50%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) translateY(-50%);
+                opacity: 1;
+            }
+        }
+
+        /* Floating animation for cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .deck-card {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Controls and Layout */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .deck-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* Button variants */
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn.success {
+            background: rgba(46, 213, 115, 0.2);
+            border-color: rgba(46, 213, 115, 0.3);
+        }
+
+        .btn.danger {
+            background: rgba(255, 71, 87, 0.2);
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+
+        .btn.success:hover {
+            background: rgba(46, 213, 115, 0.3);
+            box-shadow: 0 8px 25px rgba(46, 213, 115, 0.4);
+        }
+
+        .btn.danger:hover {
+            background: rgba(255, 71, 87, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Modal Improvements */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,96,100,0.5);
-            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
         .modal-content {
-            background: rgba(255,255,255,0.95);
+            width: 90%;
+            max-width: 500px;
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            border: 2px solid #80deea;
-            max-width: 600px;
-            margin: 2rem auto;
+            border-radius: 20px;
             position: relative;
         }
 
-        /* Form styles */
+        .modal-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form Improvements */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -253,69 +420,112 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #006064;
-            font-weight: 600;
+            color: #fff;
+            font-size: 1.1rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #b2ebf2;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.9);
-            color: #006064;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #00acc1;
-            box-shadow: 0 0 0 3px rgba(0,172,193,0.2);
+        /* Stats Improvements */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
         }
 
-        /* Toast notification */
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #00fff2, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Toast Improvements */
         .toast {
             position: fixed;
-            bottom: 2rem;
+            top: 2rem;
             right: 2rem;
             padding: 1rem 2rem;
-            background: rgba(0,96,100,0.9);
-            color: white;
-            border-radius: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Animations */
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
         }
 
         @keyframes slideIn {
             from {
-                transform: translateX(100%);
+                transform: translateY(20px);
                 opacity: 0;
             }
             to {
-                transform: translateX(0);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
+        /* Deck Card Improvements */
+        .deck-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .deck-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .flashcard-container {
                 width: 90%;
                 height: 300px;
             }
 
-            .controls {
-                flex-direction: column;
+            .header h1 {
+                font-size: 2rem;
             }
 
             .btn {
-                width: 100%;
+                min-width: 150px;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -323,14 +533,14 @@
 <body>
     <div class="container fade-in">
         <div class="header slide-in">
-            <h1>Flashcard Study App</h1>
+            <h1>✨ Flashcard Study App</h1>
             <p>Master any subject with our interactive flashcard system</p>
         </div>
 
         <div class="controls slide-in">
-            <button class="btn" onclick="showCreateDeckModal()">Create New Deck</button>
-            <button class="btn secondary" onclick="showAllDecks()">View All Decks</button>
-            <button class="btn success" onclick="showStats()">View Statistics</button>
+            <button class="btn" onclick="showCreateDeckModal()">✨ Create New Deck</button>
+            <button class="btn secondary" onclick="showAllDecks()">📚 View All Decks</button>
+            <button class="btn success" onclick="showStats()">📊 View Statistics</button>
         </div>
 
         <div class="flashcard-container" style="display: none;">
@@ -339,21 +549,21 @@
                 <div class="card-face back"></div>
             </div>
             <div class="deck-controls">
-                <button class="btn secondary" onclick="previousCard()">Previous</button>
-                <button class="btn" onclick="flipCard()">Flip</button>
-                <button class="btn secondary" onclick="nextCard()">Next</button>
-                <button class="btn success" onclick="markAsMastered()">Mark as Mastered</button>
+                <button class="btn secondary" onclick="previousCard()">⬅️ Previous</button>
+                <button class="btn" onclick="flipCard()">🔄 Flip</button>
+                <button class="btn secondary" onclick="nextCard()">➡️ Next</button>
+                <button class="btn success" onclick="markAsMastered()">✅ Mark as Mastered</button>
             </div>
         </div>
 
         <div class="deck-list"></div>
     </div>
 
-    <!-- Create Deck Modal -->
+    <!-- Modals -->
     <div class="modal" id="createDeckModal">
         <div class="modal-content slide-in">
             <div class="modal-header">
-                <h2>Create New Deck</h2>
+                <h2>✨ Create New Deck</h2>
             </div>
             <div class="form-group">
                 <label for="deckTitle">Deck Title</label>
@@ -370,11 +580,10 @@
         </div>
     </div>
 
-    <!-- Add Card Modal -->
     <div class="modal" id="addCardModal">
         <div class="modal-content slide-in">
             <div class="modal-header">
-                <h2>Add New Card</h2>
+                <h2>✨ Add New Card</h2>
             </div>
             <div class="form-group">
                 <label for="cardFront">Front Side</label>
@@ -391,11 +600,10 @@
         </div>
     </div>
 
-    <!-- Statistics Modal -->
     <div class="modal" id="statsModal">
         <div class="modal-content slide-in">
             <div class="modal-header">
-                <h2>Study Statistics</h2>
+                <h2>📊 Study Statistics</h2>
             </div>
             <div id="statsContent"></div>
             <div class="controls">
@@ -682,7 +890,3 @@
     </script>
 </body>
 </html>
-
-
-
-
